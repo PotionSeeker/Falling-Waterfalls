@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[43,)"
+license="Academic Free License v3.0"
+
+[[mods]]
+modId="falling_waterfalls"
+version="1.0.0"
+displayName="Falling Waterfalls"
+credits=""
+displayURL="https://potionseeker.net"
+authors="PotionSeeker"
+description='''
+Prevents players from swimming up falling waterfalls, unless they have the Salmon's Strife effect.
+'''
+
+[[dependencies.falling_waterfalls]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.19.2]"
+ordering="NONE"
+side="BOTH"
