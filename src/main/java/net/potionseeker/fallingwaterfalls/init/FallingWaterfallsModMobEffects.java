@@ -4,10 +4,8 @@ import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraft.world.effect.MobEffect;
-import net.potionseeker.fallingwaterfalls.potion.SalmonsStrifeMobEffect;
 import net.potionseeker.fallingwaterfalls.FallingWaterfallsMod;
-
-
+import net.potionseeker.fallingwaterfalls.potion.SalmonsStrifeMobEffect;
 
 public class FallingWaterfallsModMobEffects {
     public static final DeferredRegister<MobEffect> REGISTRY = DeferredRegister.create(
