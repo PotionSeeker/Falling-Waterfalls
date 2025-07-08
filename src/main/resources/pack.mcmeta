@@ -1,8 +1,6 @@
 {
   "pack": {
-    "description": "Falling Waterfalls mod resources",
-    "pack_format": 10,
-    "forge:resource_pack_format": 10,
-    "forge:data_pack_format": 12
+    "pack_format": 15,
+    "description": "Prevents swimming up flowing water and applies fall damage."
   }
 }

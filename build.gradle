@@ -1,14 +1,17 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 
 version = '1.0'
@@ -45,8 +48,27 @@ minecraft {
     }
 }
 
+mixin {
+    add sourceSets.main, 'falling_waterfalls.refmap.json'
+    config 'mixins.falling_waterfalls.json'
+}
+
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation 'org.spongepowered:mixin:0.8.5'
+    implementation 'io.github.llamalad7:mixinextras-forge:0.3.2'
+}
+
+jar {
+    manifest {
+        attributes(
+                'MixinConfigs': 'mixins.falling_waterfalls.json'
+        )
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        include 'META-INF/**'
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {

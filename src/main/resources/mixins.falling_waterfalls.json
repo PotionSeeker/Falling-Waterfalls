@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.potionseeker.fallingwaterfalls.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "falling_waterfalls.refmap.json",
+  "mixins": [
+    "PlayerMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
