@@ -22,13 +22,14 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
     mappings channel: 'official', version: '1.20.1'
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 falling_waterfalls {
                     source sourceSets.main
@@ -39,6 +40,8 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 falling_waterfalls {
                     source sourceSets.main
@@ -61,16 +64,33 @@ dependencies {
 }
 
 jar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     manifest {
         attributes(
                 'MixinConfigs': 'mixins.falling_waterfalls.json'
         )
     }
-    from(sourceSets.main.resources.srcDirs) {
-        include 'META-INF/**'
-    }
+    finalizedBy('reobfJar')
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+// Task to inspect resources included in the JAR
+task inspectResources {
+    doLast {
+        def metaInf = sourceSets.main.resources.files.findAll { it.path.contains('META-INF') }
+        def assets = sourceSets.main.resources.files.findAll { it.path.contains('assets') }
+        def data = sourceSets.main.resources.files.findAll { it.path.contains('data') }
+        def pack = sourceSets.main.resources.files.findAll { it.name == 'pack.mcmeta' }
+        println "META-INF files:"
+        metaInf.each { println "  ${it.path}" }
+        println "Assets files:"
+        assets.each { println "  ${it.path}" }
+        println "Data files:"
+        data.each { println "  ${it.path}" }
+        println "Pack.mcmeta files:"
+        pack.each { println "  ${it.path}" }
+    }
 }
