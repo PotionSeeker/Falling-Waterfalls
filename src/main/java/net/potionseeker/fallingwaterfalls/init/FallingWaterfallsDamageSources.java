@@ -13,12 +13,12 @@ public class FallingWaterfallsDamageSources {
     private static final Logger LOGGER = LogManager.getLogger(FallingWaterfallsDamageSources.class);
 
     public static DamageSource waterfallFall(Level level) {
-        LOGGER.debug("Attempting to access DamageType: {}", FallingWaterfallsDamageTypes.WATERFALL_FALL.location());
+//        LOGGER.debug("Attempting to access DamageType: {}", FallingWaterfallsDamageTypes.WATERFALL_FALL.location());
         if (level.registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE).containsKey(FallingWaterfallsDamageTypes.WATERFALL_FALL.location())) {
-            LOGGER.debug("DamageType found: {}", FallingWaterfallsDamageTypes.WATERFALL_FALL.location());
+//            LOGGER.debug("DamageType found: {}", FallingWaterfallsDamageTypes.WATERFALL_FALL.location());
             return new DamageSource(level.registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE).getHolderOrThrow(FallingWaterfallsDamageTypes.WATERFALL_FALL));
         } else {
-            LOGGER.warn("DamageType not found: {}. Falling back to custom WaterfallDamageSource with minecraft:fall type", FallingWaterfallsDamageTypes.WATERFALL_FALL.location());
+//            LOGGER.warn("DamageType not found: {}. Falling back to custom WaterfallDamageSource with minecraft:fall type", FallingWaterfallsDamageTypes.WATERFALL_FALL.location());
             return new WaterfallDamageSource(
                     level.registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE).getHolderOrThrow(
                             net.minecraft.resources.ResourceKey.create(
@@ -37,7 +37,7 @@ public class FallingWaterfallsDamageSources {
 
         @Override
         public Component getLocalizedDeathMessage(LivingEntity entity) {
-            LOGGER.debug("Returning custom death message for player {}", entity.getName().getString());
+//            LOGGER.debug("Returning custom death message for player {}", entity.getName().getString());
             return Component.translatable("death.fallingwaterfalls.waterfall", entity.getName());
         }
     }

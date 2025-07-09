@@ -20,11 +20,11 @@ public class FallingWaterfallsMod {
 	public static final Logger LOGGER = LogManager.getLogger(FallingWaterfallsMod.class);
 
 	public FallingWaterfallsMod() {
-		LOGGER.debug("Initializing FallingWaterfallsMod");
+//		LOGGER.debug("Initializing FallingWaterfallsMod");
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		FallingWaterfallsModMobEffects.REGISTRY.register(modEventBus);
 		MinecraftForge.EVENT_BUS.register(this);
-		LOGGER.debug("Registered mod event bus and Forge event bus");
+//		LOGGER.debug("Registered mod event bus and Forge event bus");
 	}
 
 	@SubscribeEvent
@@ -33,9 +33,9 @@ public class FallingWaterfallsMod {
 			if ((event.getSource().type().msgId().equals("fallingwaterfalls.waterfall") ||
 					event.getSource() instanceof FallingWaterfallsDamageSources.WaterfallDamageSource) &&
 					player.getPersistentData().getBoolean("falling_waterfalls:waterfall_fall")) {
-				LOGGER.debug("Processing death for player {} due to waterfall fall with DamageSource: {}, msgId: {}",
-						player.getName().getString(), event.getSource().getClass().getSimpleName(),
-						event.getSource().type().msgId());
+//				LOGGER.debug("Processing death for player {} due to waterfall fall with DamageSource: {}, msgId: {}",
+//						player.getName().getString(), event.getSource().getClass().getSimpleName(),
+//						event.getSource().type().msgId());
 				player.getPersistentData().remove("falling_waterfalls:waterfall_fall"); // Clean up
 			}
 		}

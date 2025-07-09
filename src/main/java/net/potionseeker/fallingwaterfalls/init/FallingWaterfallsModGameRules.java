@@ -9,4 +9,7 @@ public class FallingWaterfallsModGameRules {
 	public static final GameRules.Key<GameRules.BooleanValue> NO_FALL_SWIMMING = GameRules.register(
 			"noFallSwimming", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true)
 	);
+	public static final GameRules.Key<GameRules.BooleanValue> WATERFALL_DAMAGE = GameRules.register(
+			"waterfallDamage", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true)
+	);
 }

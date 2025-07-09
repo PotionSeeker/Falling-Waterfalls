@@ -1,6 +1,8 @@
 {
-  "gamerule.noFallSwimming.description": "You are not a salmon. You cannot swim upwards in flowing fluids.",
-  "effect.falling_waterfalls.salmons_strife": "Salmon\u0027s Strife",
+  "gamerule.noFallSwimming.description": "Prevents players from swimming up waterfalls.",
   "gamerule.noFallSwimming": "No Waterfall Swimming",
+  "gamerule.waterfallDamage.description": "Falling down a waterfall applies fall damage.",
+  "gamerule.waterfallDamage": "Waterfall Damage",
+  "effect.falling_waterfalls.salmons_strife": "Salmon\u0027s Strife",
   "death.attack.falling_waterfalls.waterfall": "%s was swept away by a waterfall"
 }

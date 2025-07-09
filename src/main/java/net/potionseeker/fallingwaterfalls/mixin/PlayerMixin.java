@@ -40,7 +40,7 @@ public abstract class PlayerMixin extends Entity {
     private void onTravel(Vec3 movementInput, CallbackInfo ci) {
         Player player = (Player) (Object) this;
         if (player.isCreative() || player.isSpectator() || !player.level().getGameRules().getBoolean(FallingWaterfallsModGameRules.NO_FALL_SWIMMING)) {
-            LOGGER.debug("Skipping waterfall logic for player {}: Creative, Spectator, or game rule disabled", player.getName().getString());
+            LOGGER.debug("Skipping waterfall logic for player {}: Creative, Spectator, or game rule noFallSwimming disabled", player.getName().getString());
             waterfallFallDistance = 0.0F;
             wasInWaterfall = false;
             wasGrounded = player.onGround();
@@ -78,7 +78,7 @@ public abstract class PlayerMixin extends Entity {
             if (isInFlowingWater) break;
         }
 
-        // Check if player is grounded or within 0.5 blocks above a solid block
+        // Check if player is grounded or within 0.7 blocks above a solid block
         boolean isGrounded = player.onGround();
         if (!isGrounded) {
             for (double x = boundingBox.minX; x <= boundingBox.maxX; x += 0.1) {
@@ -88,7 +88,7 @@ public abstract class PlayerMixin extends Entity {
                         isGrounded = true;
                         break;
                     }
-                    // Check up to 0.5 blocks above the ground
+                    // Check up to 0.7 blocks above the ground
                     mutablePos.setY((int) Math.floor(boundingBox.minY - 0.7));
                     if (!player.level().getBlockState(mutablePos).getCollisionShape(player.level(), mutablePos).isEmpty()) {
                         isGrounded = true;
@@ -104,7 +104,13 @@ public abstract class PlayerMixin extends Entity {
 
         // Apply damage when transitioning to grounded state with downward motion
         if ((isInFlowingWater || (isInAir && wasInWaterfall)) && isGrounded && !wasGrounded && waterfallFallDistance > 3.0F && player.getDeltaMovement().y < 0) {
-            if (!player.hasEffect(MobEffects.SLOW_FALLING)) {
+            if (!player.level().getGameRules().getBoolean(FallingWaterfallsModGameRules.WATERFALL_DAMAGE)) {
+                LOGGER.debug("Player {} landed {} after falling {} blocks, but waterfallDamage gamerule is disabled",
+                        player.getName().getString(), isInFlowingWater ? "in waterfall" : "in air after waterfall", waterfallFallDistance);
+                waterfallFallDistance = 0.0F;
+                wasInWaterfall = false;
+                player.getPersistentData().remove("falling_waterfalls:waterfall_fall");
+            } else if (!player.hasEffect(MobEffects.SLOW_FALLING)) {
                 float damage = waterfallFallDistance - 3.0F; // 1 damage per block after 3 blocks
                 if (damage > 0) {
                     LOGGER.debug("Player {} landed {} after falling {} blocks, velocityY: {}, attempting to apply {} damage",
